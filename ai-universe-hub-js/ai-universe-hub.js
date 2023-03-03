@@ -1,20 +1,19 @@
-const LoadData = () => {
+const LoadData = (id) => {
     const url = `https://openapi.programming-hero.com/api/ai/tools`
     fetch(url)
     .then(res => res.json())
-    .then(data => DisplayData(data.data.tools))
+    .then(data => DisplayData(data.data.tools, id))
 }
 
-const DisplayData = (Tools) => {
+const DisplayData = (Tools, id) => {
     // console.log(Tools)
     const DisplayContainer = document.getElementById('Show-Details')
     const SeeMore = document.getElementById('see-more')
-    if(Tools.length > 6){
+    if(id && Tools.length > 6){
         Tools = Tools.slice(0, 6)
         SeeMore.classList.remove('hidden')
     }
     else{
-        Tools =
         SeeMore.classList.add('hidden')
     }
     Tools.forEach(tool => {
@@ -43,8 +42,8 @@ const DisplayData = (Tools) => {
                 `
         DisplayContainer.appendChild(ToolsDiv)
         // ToggleSpinner(false)
-
     });
+    toggleSpinner(false)
 }
 
 
@@ -104,15 +103,36 @@ const ShowDetails = (id) => {
     const QuestionAnswer = document.getElementById('Question-Answer')
     console.log(input_output_examples[0])
     QuestionAnswer.innerHTML= `
-    <p class="font-semibold text-xl">${input_output_examples[0].input === undefined ? 'hidden' : ''} ${input_output_examples[0].input}</p>
-    <p class="">${input_output_examples[0].output === undefined ? 'hidden' : ''} ${input_output_examples[0].output}</p>
+    <p class="font-semibold text-xl ${input_output_examples[0].input === undefined ? 'hidden' : ''}"> ${input_output_examples[0].input}</p>
+    <p class="${input_output_examples[0].output === undefined ? 'hidden' : ''}"> ${input_output_examples[0].output}</p>
     `
+    console.log(accuracy)
 
 // Accuracy Button Option
     const AccuracyBtn = document.getElementById('accuracy')
-    AccuracyBtn.innerText=`${accuracy.score === undefined ? 'hidden' : ''}${accuracy.score * 100}% accuracy`
-
+    AccuracyBtn.innerText=`${accuracy.score === undefined ? 'hidden' : ''} ${accuracy.score * 100}%  accuracy`
+return id
 }
+
+
+document.getElementById('see-more').addEventListener('click', function(){
+    toggleSpinner(true)
+    LoadData()
+})
+
+
+
+const toggleSpinner = isLoading =>{
+    const LoaderSection = document.getElementById('loader')
+    if(isLoading){
+        LoaderSection.classList.remove('hidden')
+    }
+    else{
+        LoaderSection.classList.add('hidden')
+    }
+}
+
+toggleSpinner(true)
 
 
 LoadData()
