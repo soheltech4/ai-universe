@@ -6,11 +6,21 @@ const LoadData = () => {
 }
 
 const DisplayData = (Tools) => {
-    console.log(Tools)
+    // console.log(Tools)
     const DisplayContainer = document.getElementById('Show-Details')
+    const SeeMore = document.getElementById('see-more')
+    if(Tools.length > 6){
+        Tools = Tools.slice(0, 6)
+        SeeMore.classList.remove('hidden')
+    }
+    else{
+        Tools =
+        SeeMore.classList.add('hidden')
+    }
     Tools.forEach(tool => {
-        console.log(tool)
-        const {image, features, name, published_in} = tool
+        // console.log(tool)
+        const {image, features, name, published_in, id} = tool
+        console.log(features)
         const ToolsDiv = document.createElement('div')
         ToolsDiv.classList = ('card w-96 bg-base-100 shadow-xl border-2')
         ToolsDiv.innerHTML = `
@@ -19,23 +29,85 @@ const DisplayData = (Tools) => {
                 </figure>
                 <div class="card-body">
                 <h1 class="text-2xl">Features:</h1>
-                <ul class="list-decimal ml-5">
-                    <li>${features[0]}</li>
-                    <li>${features[1]}</li>
-                    <li>${features[2]}</li>
-                </ul>
+                <ol class="list-disc pl-5">
+                    <li class="${features[0] === undefined ? 'hidden' : ''}">${features[0]}</li>
+                    <li class="${features[1] === undefined ? 'hidden' : ''}">${features[1]}</li>
+                    <li class="${features[2] === undefined ? 'hidden' : ''}">${features[2]}</li>
+                    <li class="${features[3] === undefined ? 'hidden' : ''}">${features[3]}</li>
+                <ol>
                 <div class="flex justify-between items-center mt-5">
                     <div>
                         <h1 class="text-xl font-semibold">${name}</h1>
                         <p><i class="fa-regular fa-calendar-days"></i> ${published_in}</p>
                     </div>
-                    <button><i class="fa-solid fa-arrow-right bg-red-200 p-3 rounded-full text-red-500"></i></button>
-                </div>
-                
+                    <label onclick="LoadDetails('${id}')" for="my-modal-3"><i class="fa-solid fa-arrow-right bg-red-200 p-3 rounded-full text-red-500"></i></label>                       
         `
         DisplayContainer.appendChild(ToolsDiv)
+        // ToggleSpinner(false)
+
     });
 }
 
+
+
+
+
+
+const LoadDetails = (id) =>{
+    const url = `https://openapi.programming-hero.com/api/ai/tool/${id}`
+    fetch (url)
+    .then (res => res.json())
+    .then (data => ShowDetails(data.data))
+}
+
+const ShowDetails = (id) => {
+    // const ModalTitle = document.getElementById('modal-title')
+    console.log(id)
+    const {description, pricing, features, integrations, image_link, input_output_examples} = id
+    const Title = document.getElementById('titles')
+    Title.innerText = `${description}`
+
+    const Prices = document.getElementById('prices')
+    Prices.innerHTML=`
+        <p class="p-3 bg-white rounded text-green-700">${pricing[0].price} ${pricing[0].plan}</p>
+        <p class="p-3 bg-white rounded text-orange-600">${pricing[1].price} ${pricing[1].plan}</p>
+        <p class="p-3 bg-white rounded text-red-700">${pricing[2].price} ${pricing[2].plan}</p>
+    `
+
+    const Features = document.getElementById('Features')
+    Features.innerHTML=`
+    <h1 class="font-semibold">Features:</h1>
+    <ol class="list-disc pl-5">
+                    <li class="${features[1].feature_name === undefined ? 'hidden' : ''}">${features[1].feature_name}</li>
+                    <li class="${features[2].feature_name === undefined ? 'hidden' : ''}">${features[2].feature_name}</li>
+                    <li class="${features[3].feature_name === undefined ? 'hidden' : ''}">${features[3].feature_name}</li>
+
+                <ol>
+    `
+
+    const Integrations = document.getElementById('Integrations')
+    Integrations.innerHTML=`
+    <h1 class="font-semibold">Integrations:</h1>
+    <ol class="list-disc pl-5">
+                    <li class="${integrations[0] === undefined ? 'hidden' : ''}">${integrations[0]}</li>
+                    <li class="${integrations[1] === undefined ? 'hidden' : ''}">${integrations[1]}</li>
+                    <li class="${integrations[2] === undefined ? 'hidden' : ''}">${integrations[2]}</li>
+                    <li class="${integrations[3] === undefined ? 'hidden' : ''}">${integrations[3]}</li>
+                <ol>
+    `
+
+    const ModalImage = document.getElementById('modal-image')
+    ModalImage.innerHTML=`
+    <img src="${image_link[0]}" alt="Shoes" class="rounded-xl h-full w-full" />
+    `
+
+    const QuestionAnswer = document.getElementById('Question-Answer')
+    console.log(input_output_examples[0])
+    QuestionAnswer.innerHTML= `
+    <p class="font-semibold text-xl">${input_output_examples[0].input === undefined ? 'hidden' : ''} ${input_output_examples[0].input}</p>
+    <p class="">${input_output_examples[0].output === undefined ? 'hidden' : ''} ${input_output_examples[0].output}</p>
+    `
+
+}
 
 LoadData()

@@ -11,18 +11,118 @@
 
 </head>
 <body>
+    <!-- Header Section -->
 <header class="container mx-auto text-3xl mt-5 text-center font-semibold">
     <h1>AI Universe Hub</h1>
+    <button class="m-5 text-center text-xl bg-red-600 rounded-md px-4 py-2 text-white ">Sort By Date</button>
+    
 </header>
-<main>
-     <section class="container mx-auto">
-            <div  id="Show-Details"  class="grid md:grid-cols-3 gap-y-10 gap-x-10 m-5">
-            
-            
 
+<!-- Div and Others Section -->
+<main class="container mx-auto">
+     <section>
+            <div  id="Show-Details"  class="grid md:grid-cols-3 gap-y-10 gap-x-10 m-5">
+                
+                
             </div>
      </section>
+     
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+     <div class="container mx-auto text-center">
+        <button id="see-more" onclick="SeeMore()"  class="m-5 text-center text-xl bg-red-600 rounded-md px-4 py-2 text-white hidden">See More</button>
+     </div>
+
+    <section class="flex items-center">
+        <button id="Loading" class="btn btn-square loading"></button>
+        
+    </section>
+
+
+
+
+
+
+
+
+
+
+    <!-- Modal Part -->
+    <section>
+        <input type="checkbox" id="my-modal-3" class="modal-toggle" />
+        <div class="modal ">
+          <div class="modal-box max-w-max relative">
+                <div class="md:flex justify-between gap-y-10 gap-x-10 p-5">
+                    <div class="">
+                        <div class="card w-96 bg-base-100 shadow-xl">
+                            <div class="bg-red-200 p-5 rounded-lg">
+                                <h3 id="titles" class="text-lg font-bold"></h3>
+                                <div id="prices" class="flex justify-between items-center gap-3 text-center font-semibold mt-3"></div>
+                                <div class="flex justify-between gap-3 mt-3 mb-3">
+                                    <div id="Features" class=""></div>
+                                    <div id="Integrations" class=""></div>
+                                </div>
+                            </div>
+                           
+                                
+                        </div>
+                    </div>                       
+                    <div>
+                        <div class="card w-96 bg-base-100 shadow-xl">
+                            <figure id="modal-image" class="px-5 pt-5 relative">
+                            </figure>
+                            <div class="card-body items-center text-center">
+                              <div id="Question-Answer" class="text-center">
+                                
+                              </div>
+                            </div>
+                            <button id="accurecy-btn" class="bg-red-600 absolute right-10 top-10 p-2 text-white font-semibold rounded"></button>
+                          </div>
+                    </div>
+                    <label for="my-modal-3" class="btn btn-sm btn-circle absolute right-5 top-2">✕</label>
+                </div>
+                
+           </div>
+        </div>
+        </div>
+    </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </main>
+
+
    
 <script src="./ai-universe-hub-js/ai-universe-hub.js"></script>
 </body>
