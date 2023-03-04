@@ -10,16 +10,15 @@ const DisplayData = (Tools) => {
     // console.log(Tools)
     const DisplayContainer = document.getElementById('Show-Details')
     const SeeMore = document.getElementById('see-more')
-    
-    // let OtherTools = []
-    // if(Tools.length > 6){
-    //     Tools = Tools.slice(0, 6)
-    //             SeeMore.classList.remove('hidden')
-    // }
-    // else{
-    //     Tools
-    //     SeeMore.classList.add('hidden')
-    // }
+
+    if(Tools.length > 12){
+        Tools = Tools.slice(0, 6)
+        SeeMore.classList.remove('hidden')
+    }
+    else{
+        Tools
+        SeeMore.classList.add('hidden')
+    }
 
     Tools.forEach(tool => {
         const {image, features, name, published_in, id} = tool
@@ -46,10 +45,11 @@ const DisplayData = (Tools) => {
                 </div>      
                 `
         DisplayContainer.appendChild(ToolsDiv)
-        // ToggleSpinner(false)
     });
     toggleSpinner(false)
 }
+
+
 
 
 const LoadDetails = (id) =>{
@@ -113,11 +113,12 @@ const ShowDetails = (id) => {
     `
     console.log(accuracy)
 
+
 // Accuracy Button Option
     const AccuracyBtn = document.getElementById('accuracy')
-    AccuracyBtn.innerText=`${accuracy.score === undefined ? 'hidden' : ''} ${accuracy.score * 100}%  accuracy`
-
-    return id
+    // `<a class="${input_output_examples[0].output === undefined ? 'hidden' : ''}"> ${input_output_examples[0].output}</a>`
+    AccuracyBtn.innerHTML=`<a class="${accuracy.score === null ?  'hidden' : ''}"> ${accuracy.score * 100}%  accuracy</a>`
+    // AccuracyBtn.innerText=`${accuracy.score === null ? 'hidden' : ''} ${accuracy.score * 100}%  accuracy`
 }
 
 
