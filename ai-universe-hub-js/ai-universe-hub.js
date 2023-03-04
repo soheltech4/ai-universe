@@ -10,18 +10,17 @@ const DisplayData = (Tools) => {
     // console.log(Tools)
     const DisplayContainer = document.getElementById('Show-Details')
     const SeeMore = document.getElementById('see-more')
-
-    if(Tools.length > 12){
+    if(Tools.length > 6){
         Tools = Tools.slice(0, 6)
         SeeMore.classList.remove('hidden')
     }
     else{
-        Tools
         SeeMore.classList.add('hidden')
     }
 
     Tools.forEach(tool => {
         const {image, features, name, published_in, id} = tool
+        console.log(published_in)
         const ToolsDiv = document.createElement('div')
         ToolsDiv.classList = ('card w-96 bg-base-100 shadow-xl border-2')
         ToolsDiv.innerHTML = `
@@ -48,9 +47,6 @@ const DisplayData = (Tools) => {
     });
     toggleSpinner(false)
 }
-
-
-
 
 const LoadDetails = (id) =>{
     const url = `https://openapi.programming-hero.com/api/ai/tool/${id}`
@@ -116,9 +112,7 @@ const ShowDetails = (id) => {
 
 // Accuracy Button Option
     const AccuracyBtn = document.getElementById('accuracy')
-    // `<a class="${input_output_examples[0].output === undefined ? 'hidden' : ''}"> ${input_output_examples[0].output}</a>`
-    AccuracyBtn.innerHTML=`<a class="${accuracy.score === null ?  'hidden' : ''}"> ${accuracy.score * 100}%  accuracy</a>`
-    // AccuracyBtn.innerText=`${accuracy.score === null ? 'hidden' : ''} ${accuracy.score * 100}%  accuracy`
+    AccuracyBtn.innerHTML=`<a class="${accuracy.score !== null ?  'block' : 'hidden'}"> ${accuracy.score * 100}%  accuracy</a>`
 }
 
 
@@ -126,6 +120,7 @@ document.getElementById('see-more').addEventListener('click', function(){
     toggleSpinner(true)
     LoadData()
 })
+
 
 
 const toggleSpinner = isLoading =>{
