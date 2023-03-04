@@ -1,21 +1,26 @@
-const LoadData = (id) => {
+const LoadData = () => {
     const url = `https://openapi.programming-hero.com/api/ai/tools`
     fetch(url)
     .then(res => res.json())
-    .then(data => DisplayData(data.data.tools, id))
+    .then(data => DisplayData(data.data.tools))
 }
 
-const DisplayData = (Tools, id) => {
+
+const DisplayData = (Tools) => {
     // console.log(Tools)
     const DisplayContainer = document.getElementById('Show-Details')
     const SeeMore = document.getElementById('see-more')
-    if(id && Tools.length > 6){
-        Tools = Tools.slice(0, 6)
-        SeeMore.classList.remove('hidden')
-    }
-    else{
-        SeeMore.classList.add('hidden')
-    }
+    
+    // let OtherTools = []
+    // if(Tools.length > 6){
+    //     Tools = Tools.slice(0, 6)
+    //             SeeMore.classList.remove('hidden')
+    // }
+    // else{
+    //     Tools
+    //     SeeMore.classList.add('hidden')
+    // }
+
     Tools.forEach(tool => {
         const {image, features, name, published_in, id} = tool
         const ToolsDiv = document.createElement('div')
@@ -111,7 +116,8 @@ const ShowDetails = (id) => {
 // Accuracy Button Option
     const AccuracyBtn = document.getElementById('accuracy')
     AccuracyBtn.innerText=`${accuracy.score === undefined ? 'hidden' : ''} ${accuracy.score * 100}%  accuracy`
-return id
+
+    return id
 }
 
 
@@ -119,7 +125,6 @@ document.getElementById('see-more').addEventListener('click', function(){
     toggleSpinner(true)
     LoadData()
 })
-
 
 
 const toggleSpinner = isLoading =>{
